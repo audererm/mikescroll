@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#iframe').css("height", ($(window).height() - 64));
+        $('#iframe').on("load", function() {
+            var scrollPosition = sessionStorage.getItem("scrollPosition");
+            console.log(scrollPosition);
+            var iframe = document.getElementById("iframe");
+            var frameObj = iframe.contentWindow;
+            if (window.pageYOffset == undefined) {
+                frameObj = (frameObj.document.documentElement) ? frameObj.document.documentElement : frameObj = document.body;
+            }
+
+            frameObj.scrollTo(0, scrollPosition);
+
+            frameObj.onscroll = function(e) {
+                sessionStorage.setItem("scrollPosition", frameObj.scrollY);
+            }
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Logo</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="sass.html">Sass</a></li>
+                <li><a href="badges.html">Components</a></li>
+                <li><a href="collapsible.html">JavaScript</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="iframe-wrapper shadowfix">
+        <iframe id="iframe" src="content.html">
+        </iframe>
+    </div>
+</body>
+
+</html>
